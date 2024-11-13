@@ -6,7 +6,7 @@ def show():
 
     # Hiperparâmetros configuráveis
     n_estimators = st.slider("Número de Árvores (n_estimators)", min_value=1, max_value=30, step=5, value=10)
-    random_state = st.slider("Estado Aleatório (random_state)", min_value=12, max_value=96, step=12, value=36)
+    #random_state = st.slider("Estado Aleatório (random_state)", min_value=12, max_value=96, step=12, value=36)
     criterion = st.selectbox("Critério de Divisão (criterion)", options=["gini", "entropy"], index=1)
     max_features = st.selectbox("Máximo de Features (max_features)", options=["auto", "sqrt", "log2"], index=1)
     max_depth = st.slider("Profundidade Máxima das Árvores (max_depth)", min_value=3, max_value=15, step=3, value=6)
