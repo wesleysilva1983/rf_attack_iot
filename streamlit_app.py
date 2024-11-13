@@ -15,11 +15,11 @@ if "X_train" not in st.session_state:
 
 # Carregar as páginas com base na seleção
 if page == "Instruções":
-    import pages.instructions as instructions
+    import modules.instructions as instructions
     instructions.show()
 elif page == "Configuração de Hiperparâmetros":
-    import pages.hyperparameters as hyperparameters
+    import modules.hyperparameters as hyperparameters
     hyperparameters.show()
 elif page == "Resultados":
-    import pages.results as results
+    import modules.results as results
     results.show()
