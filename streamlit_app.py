@@ -1,14 +1,23 @@
 import streamlit as st
-import streamlit as st
-import os
 
-# Read files *.py
-file_path = os.path.join("project", "description.py")
-with open(file_path) as f:
-    exec(f.read())
+# Configuração de navegação
+st.sidebar.title("Navegação")
+page = st.sidebar.selectbox("Selecione a Página", ["Instruções", "Configuração de Hiperparâmetros", "Resultados"])
 
-# Read files *.py
-file_path = os.path.join("project", "model_ml.py")
-with open(file_path) as f:
-    exec(f.read())
+# Carregar dados uma única vez para todas as páginas
+if "X_train" not in st.session_state:
+    st.session_state.X_train = pd.read_csv('dataset/X_train.csv')
+    st.session_state.y_train = pd.read_csv('dataset/y_train.csv').values.ravel()
+    st.session_state.X_test = pd.read_csv('dataset/X_test.csv')
+    st.session_state.y_test = pd.read_csv('dataset/y_test.csv').values.ravel()
 
+# Carregar as páginas com base na seleção
+if page == "Instruções":
+    import pages.instructions as instructions
+    instructions.show()
+elif page == "Configuração de Hiperparâmetros":
+    import pages.hyperparameters as hyperparameters
+    hyperparameters.show()
+elif page == "Resultados":
+    import pages.results as results
+    results.show()
