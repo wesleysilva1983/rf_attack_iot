@@ -3,6 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
+from PIL import Image
 
 def show():
     st.title("Resultados do Modelo")
@@ -20,64 +21,65 @@ def show():
         st.write(f"**Profundidade Máxima (max_depth):** {rf.max_depth}")
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
-        # Exibir o boxplot das métricas de desempenho e gráfico de barras horizontal
-        st.subheader("Boxplot das Métricas e Quantitativo de Dados do Dataset")
+        # Carregar e exibir a imagem com os dados do dataset
+        img = Image.open('/mnt/data/image.png')
+        st.image(img, caption="Distribuição de Dados por Classe")
 
-        # Preparar os dados para o gráfico de barras individualizado
+        # Exibir o boxplot das métricas de desempenho
+        st.subheader("Boxplot das Métricas de Desempenho")
+        fig_boxplot, ax1 = plt.subplots(figsize=(10, 6))
+        sns.boxplot(data=metrics_df, ax=ax1)
+        ax1.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
+        st.pyplot(fig_boxplot)
+
+        # Preparar os dados para o gráfico de barras horizontal individualizado
         train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
         test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
 
-        # Criar um DataFrame para facilitar a plotagem
+        # Renomear as classes com as etiquetas específicas
         class_counts_df = pd.DataFrame({
             "Treino": train_counts,
             "Teste": test_counts
         }).fillna(0)
+        class_counts_df.index = ["0 (benign)", "1 (mirai)", "2 (gafgyt)"]
 
-        # Configurar o layout dos gráficos lado a lado
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6), gridspec_kw={'width_ratios': [2, 1]})
-
-        # Boxplot das métricas
-        sns.boxplot(data=metrics_df, ax=ax1)
-        ax1.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
-
-        # Gráfico de barras horizontal com barras individualizadas para cada classe
+        # Exibir o gráfico de barras horizontal individualizado
+        st.subheader("Quantidade de Dados por Classe (Treino x Teste)")
+        fig_bar, ax2 = plt.subplots(figsize=(10, 6))
         class_counts_df.plot(kind='barh', ax=ax2, width=0.7)
-        ax2.set_title("Quantidade de Dados por Classe (Treino x Teste)")
         ax2.set_xlabel("Quantidade")
         ax2.set_ylabel("Classe")
         ax2.legend(title="Conjunto de Dados", loc="lower right")
-
-        # Exibir o gráfico na interface
-        st.pyplot(fig)
+        st.pyplot(fig_bar)
 
         # Exibir a matriz de confusão e o classification report para a última rodada
         st.subheader("Matriz de Confusão e Classification Report")
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
 
         # Matriz de Confusão
         y_pred_test = rf.predict(st.session_state.X_test)
         conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
-        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax1)
-        ax1.set_xlabel("Predição")
-        ax1.set_ylabel("Real")
-        ax1.set_title("Matriz de Confusão")
+        fig_confusion, ax3 = plt.subplots(figsize=(8, 6))
+        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax3)
+        ax3.set_xlabel("Predição")
+        ax3.set_ylabel("Real")
+        ax3.set_title("Matriz de Confusão")
+        st.pyplot(fig_confusion)
 
         # Classification Report com escala logarítmica
         report = classification_report(st.session_state.y_test, y_pred_test, output_dict=True)
         report_df = pd.DataFrame(report).transpose()
         report_df = report_df.drop(["accuracy", "macro avg", "weighted avg"], errors="ignore")
-        
-        # Plotar o classification report como gráfico de barras com escala logarítmica
-        report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax2)
-        ax2.set_title("Classification Report (Escala Logarítmica)")
-        ax2.set_ylabel("Score")
-        ax2.set_xlabel("Classe")
-        ax2.set_yscale("log")
-        ax2.legend(loc="lower right")
-        ax2.yaxis.tick_right()
 
-        # Exibir a figura com a matriz de confusão e o gráfico do classification report lado a lado
-        st.pyplot(fig)
+        st.subheader("Classification Report por Classe (Escala Logarítmica)")
+        fig_class_report, ax4 = plt.subplots(figsize=(10, 6))
+        report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax4)
+        ax4.set_title("Classification Report (Escala Logarítmica)")
+        ax4.set_ylabel("Score")
+        ax4.set_xlabel("Classe")
+        ax4.set_yscale("log")
+        ax4.legend(loc="lower right")
+        ax4.yaxis.tick_right()
+        st.pyplot(fig_class_report)
 
     else:
         st.warning("Por favor, vá para a página de Configuração de Hiperparâmetros e treine o modelo antes de visualizar os resultados.")
