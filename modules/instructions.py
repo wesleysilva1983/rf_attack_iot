@@ -23,7 +23,7 @@ def show():
     """)
 
     # Carregando a imagem de um arquivo local
-    st.image("images/fluxo.JPG", caption="Fluxo para utilizar o App", use_column_width=True)
+    st.image("images/fluxo.JPG", use_column_width=True)
 
 # Chamando a função show para renderizar o conteúdo
 show()
