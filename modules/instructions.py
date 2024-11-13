@@ -24,4 +24,4 @@ def show():
     """)
     
 # Carregando a imagem de um arquivo local
-st.image("images/fluxo_train.JPG", caption="Fluxo para utilizar o App", use_column_width=True)
+st.image("images/fluxo_train.jpg", caption="Fluxo para utilizar o App", use_column_width=True)
