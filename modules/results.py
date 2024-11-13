@@ -21,7 +21,7 @@ def show():
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
         # Gráfico 1: Quantitativo de Dados por Classe
-        st.subheader("Quantidade de Dados por Classe (Treino x Teste)")
+      
         train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
         test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
 
@@ -44,14 +44,14 @@ def show():
         st.pyplot(fig)
 
         # Gráfico 2: Boxplot das Métricas de Desempenho
-        st.subheader("Boxplot das Métricas de Desempenho (Treino x Teste)")
+     
         fig, ax = plt.subplots(figsize=(8, 6))
         sns.boxplot(data=metrics_df, ax=ax)
         ax.set_title("Boxplot das Métricas de Desempenho")
         st.pyplot(fig)
 
         # Gráfico 3: Classification Report
-        st.subheader("Classification Report (Escala Logarítmica)")
+      
         y_pred_test = rf.predict(st.session_state.X_test)
         report = classification_report(st.session_state.y_test, y_pred_test, output_dict=True)
         report_df = pd.DataFrame(report).transpose()
@@ -67,7 +67,7 @@ def show():
         st.pyplot(fig)
 
         # Gráfico 4: Matriz de Confusão
-        st.subheader("Matriz de Confusão")
+    
         conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
 
         fig, ax = plt.subplots(figsize=(8, 6))
