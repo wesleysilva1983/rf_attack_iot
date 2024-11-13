@@ -49,11 +49,11 @@ st.write(f"**F1-Score (Treino):** {f1_score_train:.4f}")
 st.write(f"**Acurácia (Teste):** {accuracy_test:.4f}")
 st.write(f"**F1-Score (Teste):** {f1_score_test:.4f}")
 
-# Plotar a matriz de confusão
+# Plotar a matriz de confusão com tamanho reduzido
 st.write("**Matriz de Confusão:**")
 conf_matrix = confusion_matrix(y_test, y_pred_test)
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(4, 3))  # Ajuste o tamanho conforme necessário
 sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
 ax.set_xlabel("Predicted Labels")
 ax.set_ylabel("True Labels")
