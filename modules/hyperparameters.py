@@ -1,5 +1,6 @@
 import streamlit as st
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, f1_score  # Importar as métricas necessárias
 import numpy as np
 
 def show():
