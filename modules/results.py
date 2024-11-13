@@ -20,63 +20,56 @@ def show():
         st.write(f"**Profundidade Máxima (max_depth):** {rf.max_depth}")
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
-        # Exibir o boxplot das métricas de desempenho e gráfico de barras horizontal
-        st.subheader("Boxplot das Métricas e Quantitativo de Dados do Dataset")
-
-        # Preparar os dados para o gráfico de barras individualizado
+        # Gráfico 1: Quantitativo de Dados por Classe
+        st.subheader("Quantidade de Dados por Classe (Treino x Teste)")
         train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
         test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
 
-        # Criar um DataFrame para facilitar a plotagem
         class_counts_df = pd.DataFrame({
             "Treino": train_counts,
             "Teste": test_counts
         }).fillna(0)
 
-        # Configurar o layout dos gráficos lado a lado
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6), gridspec_kw={'width_ratios': [2, 1]})
-
-        # Boxplot das métricas
-        sns.boxplot(data=metrics_df, ax=ax1)
-        ax1.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
-
-        # Gráfico de barras horizontal com barras individualizadas para cada classe
-        class_counts_df.plot(kind='barh', ax=ax2, width=0.7)
-        ax2.set_title("Quantidade de Dados por Classe (Treino x Teste)")
-        ax2.set_xlabel("Quantidade")
-        ax2.set_ylabel("Classe")
-        ax2.legend(title="Conjunto de Dados", loc="lower right")
-
-        # Exibir o gráfico na interface
+        fig, ax = plt.subplots(figsize=(8, 6))
+        class_counts_df.plot(kind='barh', ax=ax, width=0.7)
+        ax.set_xlabel("Quantidade")
+        ax.set_ylabel("Classe")
+        ax.set_title("Quantidade de Dados por Classe (Treino x Teste)")
+        ax.legend(title="Conjunto de Dados", loc="lower right")
         st.pyplot(fig)
 
-        # Exibir a matriz de confusão e o classification report para a última rodada
-        st.subheader("Matriz de Confusão e Classification Report")
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+        # Gráfico 2: Boxplot das Métricas de Desempenho
+        st.subheader("Boxplot das Métricas de Desempenho (Treino x Teste)")
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.boxplot(data=metrics_df, ax=ax)
+        ax.set_title("Boxplot das Métricas de Desempenho")
+        st.pyplot(fig)
 
-        # Matriz de Confusão
+        # Gráfico 3: Classification Report
+        st.subheader("Classification Report (Escala Logarítmica)")
         y_pred_test = rf.predict(st.session_state.X_test)
-        conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
-        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax1)
-        ax1.set_xlabel("Predição")
-        ax1.set_ylabel("Real")
-        ax1.set_title("Matriz de Confusão")
-
-        # Classification Report com escala logarítmica
         report = classification_report(st.session_state.y_test, y_pred_test, output_dict=True)
         report_df = pd.DataFrame(report).transpose()
         report_df = report_df.drop(["accuracy", "macro avg", "weighted avg"], errors="ignore")
-        
-        # Plotar o classification report como gráfico de barras com escala logarítmica
-        report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax2)
-        ax2.set_title("Classification Report (Escala Logarítmica)")
-        ax2.set_ylabel("Score")
-        ax2.set_xlabel("Classe")
-        ax2.set_yscale("log")
-        ax2.legend(loc="lower right")
-        ax2.yaxis.tick_right()
 
-        # Exibir a figura com a matriz de confusão e o gráfico do classification report lado a lado
+        fig, ax = plt.subplots(figsize=(8, 6))
+        report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax)
+        ax.set_title("Classification Report")
+        ax.set_ylabel("Score")
+        ax.set_xlabel("Classe")
+        ax.set_yscale("log")
+        ax.legend(loc="lower right")
+        st.pyplot(fig)
+
+        # Gráfico 4: Matriz de Confusão
+        st.subheader("Matriz de Confusão")
+        conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
+
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
+        ax.set_xlabel("Predição")
+        ax.set_ylabel("Real")
+        ax.set_title("Matriz de Confusão")
         st.pyplot(fig)
 
     else:
