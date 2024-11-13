@@ -1,16 +1,20 @@
 import streamlit as st
 import pandas as pd
 
-# Configuração dos links de navegação
-st.title("Bem-vindo ao Classificador Random Forest!")
-st.markdown("### Navegação:")
-st.markdown("[1. Instruções](?page=instructions)")
-st.markdown("[2. Configuração de Hiperparâmetros](?page=hyperparameters)")
-st.markdown("[3. Resultados](?page=results)")
+# Configuração do seletor de páginas na barra lateral
+st.sidebar.title("Navegação")
 
-# Obter o parâmetro da página da URL
-query_params = st.experimental_get_query_params()
-page = query_params.get("page", ["instructions"])[0]  # Valor padrão é "instructions" se o parâmetro não existir
+# Criando botões na barra lateral para cada página
+if st.sidebar.button("Instruções"):
+    st.session_state.page = "instructions"
+if st.sidebar.button("Configuração de Hiperparâmetros"):
+    st.session_state.page = "hyperparameters"
+if st.sidebar.button("Resultados"):
+    st.session_state.page = "results"
+
+# Definindo a página padrão caso ainda não exista uma página selecionada na sessão
+if "page" not in st.session_state:
+    st.session_state.page = "instructions"  # Página padrão
 
 # Carregar dados uma única vez para todas as páginas
 if "X_train" not in st.session_state:
@@ -19,13 +23,13 @@ if "X_train" not in st.session_state:
     st.session_state.X_test = pd.read_csv('dataset/X_test.csv')
     st.session_state.y_test = pd.read_csv('dataset/y_test.csv').values.ravel()
 
-# Carregar a página correspondente com base no parâmetro
-if page == "instructions":
+# Carregar a página correspondente com base no estado da sessão
+if st.session_state.page == "instructions":
     import modules.instructions as instructions
     instructions.show()
-elif page == "hyperparameters":
+elif st.session_state.page == "hyperparameters":
     import modules.hyperparameters as hyperparameters
     hyperparameters.show()
-elif page == "results":
+elif st.session_state.page == "results":
     import modules.results as results
     results.show()
