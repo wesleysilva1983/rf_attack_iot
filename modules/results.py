@@ -30,37 +30,35 @@ def show():
         accuracy_test = accuracy_score(st.session_state.y_test, y_pred_test)
         f1_score_test = f1_score(st.session_state.y_test, y_pred_test, average="weighted")
 
-        # Exibir as métricas solicitadas
+        # Exibir as métricas de desempenho
         st.subheader("Métricas de Desempenho")
         st.write(f"**Acurácia (Treino):** {accuracy_train:.4f}")
         st.write(f"**F1-Score (Treino):** {f1_score_train:.4f}")
         st.write(f"**Acurácia (Teste):** {accuracy_test:.4f}")
         st.write(f"**F1-Score (Teste):** {f1_score_test:.4f}")
 
-        # Plotar a matriz de confusão
-        #st.subheader("Matriz de Confusão")
-        conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
-
+        # Configurar figura e eixos para a matriz de confusão e o classification report
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
 
+        # Matriz de Confusão
+        conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
         sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax1)
-        ax1.set_xlabel("Prediction")
-        ax1.set_ylabel("True")
-        ax1.set_title("Confusion Matrix")
+        ax1.set_xlabel("Predição")
+        ax1.set_ylabel("Real")
+        ax1.set_title("Matriz de Confusão")
 
-        # Gerar o classification report e convertê-lo em um DataFrame para plotagem
+        # Classification Report com escala logarítmica
         report = classification_report(st.session_state.y_test, y_pred_test, output_dict=True)
         report_df = pd.DataFrame(report).transpose()
-
-        # Excluir as linhas "accuracy", "macro avg" e "weighted avg" para plotar apenas as classes
         report_df = report_df.drop(["accuracy", "macro avg", "weighted avg"], errors="ignore")
-
-        # Plotar o classification report como gráfico de barras
+        
+        # Plotar o classification report como gráfico de barras com escala logarítmica
         report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax2)
-        ax2.set_title("Classification Report")
+        ax2.set_title("Classification Report (Escala Logarítmica)")
         ax2.set_ylabel("Score")
-        ax2.set_xlabel("Label")
-        ax2.set_ylim(0, 1)  # Ajustar o limite do eixo y para melhorar a visualização
+        ax2.set_xlabel("Classe")
+        ax2.set_yscale("log")  # Definir o eixo y para escala logarítmica
+        ax2.set_ylim(0.8, 1)   # Ajustar os limites do eixo y para foco em valores próximos de 1
         ax2.legend(loc="lower right")
 
         # Exibir a figura com a matriz de confusão e o gráfico do classification report lado a lado
