@@ -60,6 +60,9 @@ def show():
         ax2.set_yscale("log")  # Definir o eixo y para escala logarítmica
         ax2.legend(loc="lower right")
 
+        # Mover os valores do eixo y para o lado direito
+        ax2.yaxis.tick_right()
+
         # Exibir a figura com a matriz de confusão e o gráfico do classification report lado a lado
         st.pyplot(fig)
 
