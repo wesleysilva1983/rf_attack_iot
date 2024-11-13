@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 
 def show():
     st.markdown("""
@@ -19,11 +20,9 @@ def show():
                 
     1. Configuração dos hiperparâmetros para o modelo RF.
     2. Treinamento do modelo.
-    3. Métricas do modelo.
-                
-    # Carregando a imagem de um arquivo local
-    st.image("images/fluxo.JPG", caption="Fluxo para utilizar o App", use_column_width=True)
-                
+    3. Métricas do modelo.            
     """)
-    
+
+# Carregando a imagem de um arquivo local
+st.image("images/fluxo.JPG", caption="Fluxo para utilizar o App", use_column_width=True)
 
