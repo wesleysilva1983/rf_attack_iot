@@ -3,4 +3,3 @@ pandas
 joblib
 scikit-learn
 seaborn
-PIL

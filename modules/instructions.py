@@ -1,5 +1,4 @@
 import streamlit as st
-from PIL import Image
 
 def show():
     st.markdown("""
@@ -23,8 +22,7 @@ def show():
     3. Métricas do modelo.            
     """)
 
-# Abrindo a imagem com PIL
-imagem = Image.open("images/fluxo.JPG")
-st.image(imagem, caption="Fluxo para utilizar o App", use_column_width=True)
+# Carregando a imagem de um arquivo local
+st.image("images/fluxo.JPG", caption="Fluxo para utilizar o App", use_column_width=True)
     
 
