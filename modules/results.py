@@ -31,11 +31,13 @@ def show():
         }).fillna(0)
 
         fig, ax = plt.subplots(figsize=(8, 6))
-        class_counts_df.plot(kind='barh', ax=ax, width=0.7)
+        bars = class_counts_df.plot(kind='barh', ax=ax, width=0.7)
         ax.set_xlabel("Quantidade")
         ax.set_ylabel("Classe")
         ax.set_title("Quantidade de Dados por Classe (Treino x Teste)")
         ax.legend(title="Conjunto de Dados", loc="lower right")
+        for container in ax.containers:  # Adiciona os valores nas barras
+            ax.bar_label(container)
         st.pyplot(fig)
 
         # Gráfico 2: Boxplot das Métricas de Desempenho
@@ -53,12 +55,14 @@ def show():
         report_df = report_df.drop(["accuracy", "macro avg", "weighted avg"], errors="ignore")
 
         fig, ax = plt.subplots(figsize=(8, 6))
-        report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax)
+        bars = report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax)
         ax.set_title("Classification Report")
         ax.set_ylabel("Score")
         ax.set_xlabel("Classe")
         ax.set_yscale("log")
         ax.legend(loc="lower right")
+        for container in ax.containers:  # Adiciona os valores nas barras
+            ax.bar_label(container, fmt="%.2f")
         st.pyplot(fig)
 
         # Gráfico 4: Matriz de Confusão
