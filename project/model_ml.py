@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 # Carregar os dados
 X_train = pd.read_csv('dataset/X_train.csv')
@@ -42,3 +44,14 @@ report = classification_report(y_test, y_pred, output_dict=True)
 st.write("**Acurácia:**", accuracy)
 st.write("**Relatório de Classificação:**")
 st.dataframe(pd.DataFrame(report).transpose())
+
+# Plotar a matriz de confusão
+st.write("**Matriz de Confusão:**")
+conf_matrix = confusion_matrix(y_test, y_pred)
+
+fig, ax = plt.subplots()
+sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
+ax.set_xlabel("Predicted Labels")
+ax.set_ylabel("True Labels")
+ax.set_title("Confusion Matrix")
+st.pyplot(fig)
