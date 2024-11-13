@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
 
 # Carregar os dados
 X_train = pd.read_csv('dataset/X_train.csv')
@@ -34,24 +34,27 @@ rf = RandomForestClassifier(
 rf.fit(X_train, y_train)
 
 # Fazer previsões
-y_pred = rf.predict(X_test)
+y_pred_train = rf.predict(X_train)
+y_pred_test = rf.predict(X_test)
 
-# Avaliar o modelo
-accuracy = accuracy_score(y_test, y_pred)
-report = classification_report(y_test, y_pred, output_dict=True)
+# Calcular métricas para treino e teste
+accuracy_train = accuracy_score(y_train, y_pred_train)
+f1_score_train = f1_score(y_train, y_pred_train, average="weighted")
+accuracy_test = accuracy_score(y_test, y_pred_test)
+f1_score_test = f1_score(y_test, y_pred_test, average="weighted")
 
-# Exibir os resultados
-st.write("**Acurácia:**", accuracy)
-st.write("**Relatório de Classificação:**")
-st.dataframe(pd.DataFrame(report).transpose())
+# Exibir as métricas solicitadas
+st.write(f"**Acurácia (Treino):** {accuracy_train:.4f}")
+st.write(f"**F1-Score (Treino):** {f1_score_train:.4f}")
+st.write(f"**Acurácia (Teste):** {accuracy_test:.4f}")
+st.write(f"**F1-Score (Teste):** {f1_score_test:.4f}")
 
 # Plotar a matriz de confusão
 st.write("**Matriz de Confusão:**")
-conf_matrix = confusion_matrix(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred_test)
 
 fig, ax = plt.subplots()
 sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
 ax.set_xlabel("Predicted Labels")
 ax.set_ylabel("True Labels")
-ax.set_title("Confusion Matrix")
 st.pyplot(fig)
