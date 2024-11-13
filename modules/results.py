@@ -3,7 +3,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
-from PIL import Image
 
 def show():
     st.title("Resultados do Modelo")
@@ -20,10 +19,6 @@ def show():
         st.write(f"**Máximo de Features (max_features):** {rf.max_features}")
         st.write(f"**Profundidade Máxima (max_depth):** {rf.max_depth}")
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
-
-        # Carregar e exibir a imagem com os dados do dataset
-        img = Image.open('/mnt/data/image.png')
-        st.image(img, caption="Distribuição de Dados por Classe")
 
         # Exibir o boxplot das métricas de desempenho
         st.subheader("Boxplot das Métricas de Desempenho")
