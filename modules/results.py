@@ -34,7 +34,7 @@ def show():
         bars = class_counts_df.plot(kind='barh', ax=ax, width=0.7)
         ax.set_xlabel("Quantidade")
         ax.set_ylabel("Classe")
-        ax.set_title("Quantidade de Dados por Classe (Treino x Teste)")
+    
         ax.legend(title="Conjunto de Dados", loc="lower right")
 
         # Adiciona as labels no centro das barras
