@@ -8,6 +8,8 @@ def show():
     **Discente:** Wesley Candido da Silva.
             
     **Dataset:** N-BaIoT Dataset to Detect IoT Botnet Attacks
+                
+    **Link dataset:**  https://www.kaggle.com/datasets/mkashifn/nbaiot-dataset
           
     **Link github:** https://github.com/wesleysilva1983/rf_attack_iot
     """)
