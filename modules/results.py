@@ -20,11 +20,27 @@ def show():
         st.write(f"**Profundidade Máxima (max_depth):** {rf.max_depth}")
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
-        # Exibir o boxplot das métricas de desempenho
-        st.subheader("Boxplot das Métricas de Desempenho")
-        fig, ax = plt.subplots(figsize=(10, 6))
-        sns.boxplot(data=metrics_df, ax=ax)
-        ax.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
+        # Exibir o boxplot das métricas de desempenho e gráfico de barras horizontal
+        st.subheader("Boxplot das Métricas de Desempenho e Quantidade de Dados por Classe")
+
+        # Preparar os dados para o gráfico de barras horizontal
+        train_counts = pd.Series(st.session_state['y_train']).value_counts()
+        test_counts = pd.Series(st.session_state['y_test']).value_counts()
+        class_counts_df = pd.DataFrame({'Treino': train_counts, 'Teste': test_counts}).fillna(0)
+
+        # Criar o layout de dois gráficos lado a lado
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6), gridspec_kw={'width_ratios': [2, 1]})
+
+        # Boxplot das métricas
+        sns.boxplot(data=metrics_df, ax=ax1)
+        ax1.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
+
+        # Gráfico de barras horizontal
+        class_counts_df.plot(kind='barh', stacked=True, ax=ax2)
+        ax2.set_title("Quantidade de Dados por Classe (Treino x Teste)")
+        ax2.set_xlabel("Quantidade")
+        ax2.legend(title="Conjunto de Dados")
+
         st.pyplot(fig)
 
         # Exibir a matriz de confusão e o classification report para a última rodada
