@@ -16,12 +16,13 @@ st.markdown("""
 
 def show():
     st.markdown("""
-    ### Bem-vindo ao Classificador Random Forest! Este aplicativo permite que você:
+    **Classificador Random Forest 
+                Este aplicativo permite que você:**
                 
     1. Configure hiperparâmetros para o modelo Random Forest.
     2. Treine o modelo.
     3. Veja o desempenho do modelo.
     
-    **<-- Utilize a barra lateral para navegar entre as páginas.**
+    **Utilize a barra lateral para navegar entre as páginas.**
                 
     """)
