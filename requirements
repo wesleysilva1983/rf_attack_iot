@@ -2,5 +2,3 @@ matplotlib
 pandas
 joblib
 scikit-learn
-sklearn.ensemble
-sklearn.metrics
