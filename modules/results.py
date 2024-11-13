@@ -38,15 +38,15 @@ def show():
         st.write(f"**F1-Score (Teste):** {f1_score_test:.4f}")
 
         # Plotar a matriz de confusão
-        st.subheader("Matriz de Confusão")
+        #st.subheader("Matriz de Confusão")
         conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
 
         sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax1)
-        ax1.set_xlabel("Predição")
-        ax1.set_ylabel("Real")
-        ax1.set_title("Matriz de Confusão")
+        ax1.set_xlabel("Prediction")
+        ax1.set_ylabel("True")
+        ax1.set_title("Confusion Matrix")
 
         # Gerar o classification report e convertê-lo em um DataFrame para plotagem
         report = classification_report(st.session_state.y_test, y_pred_test, output_dict=True)
@@ -59,6 +59,7 @@ def show():
         report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax2)
         ax2.set_title("Classification Report")
         ax2.set_ylabel("Score")
+        ax2.set_xlabel("Label")
         ax2.set_ylim(0, 1)  # Ajustar o limite do eixo y para melhorar a visualização
         ax2.legend(loc="lower right")
 
