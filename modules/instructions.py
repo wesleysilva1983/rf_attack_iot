@@ -22,7 +22,10 @@ def show():
     3. Métricas do modelo.            
     """)
 
-# Carregando a imagem de um arquivo local
-st.image("images/fluxo.JPG", caption="Fluxo para utilizar o App", use_column_width=True)
+    # Carregando a imagem de um arquivo local
+    st.image("images/fluxo.JPG", caption="Fluxo para utilizar o App", use_column_width=True)
+
+# Chamando a função show para renderizar o conteúdo
+show()
     
 
