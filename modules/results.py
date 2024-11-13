@@ -24,7 +24,7 @@ def show():
         metrics = {"Acurácia Treino": [], "F1-Score Treino": [], "Acurácia Teste": [], "F1-Score Teste": []}
 
         # Treinar o modelo 10 vezes com random_state variável e coletar as métricas
-        for i in range(10):
+        for i in range(5):
             # Criar um novo modelo com um random_state diferente em cada iteração
             rf = RandomForestClassifier(
                 n_estimators=rf_base.n_estimators,
