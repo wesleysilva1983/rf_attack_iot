@@ -16,14 +16,12 @@ st.markdown("""
 
 def show():
     st.markdown("""
-    ### Pós-graduação em Ciência da Computação - UEL
-    """)     
-    st.write("""
-    Bem-vindo ao Classificador Random Forest! Este aplicativo permite que você:
-    
+    ### Bem-vindo ao Classificador Random Forest! Este aplicativo permite que você:
+                
     1. Configure hiperparâmetros para o modelo Random Forest.
     2. Treine o modelo.
     3. Veja o desempenho do modelo.
     
-    Utilize a barra lateral para navegar entre as páginas.
+    **<-- Utilize a barra lateral para navegar entre as páginas.**
+                
     """)
