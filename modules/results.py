@@ -23,24 +23,31 @@ def show():
         # Exibir o boxplot das métricas de desempenho e gráfico de barras horizontal
         st.subheader("Boxplot das Métricas de Desempenho e Quantidade de Dados por Classe")
 
-        # Preparar os dados para o gráfico de barras horizontal
-        train_counts = pd.Series(st.session_state['y_train']).value_counts()
-        test_counts = pd.Series(st.session_state['y_test']).value_counts()
-        class_counts_df = pd.DataFrame({'Treino': train_counts, 'Teste': test_counts}).fillna(0)
+        # Preparar os dados para o gráfico de barras individualizado
+        train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
+        test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
 
-        # Criar o layout de dois gráficos lado a lado
+        # Criar um DataFrame para facilitar a plotagem
+        class_counts_df = pd.DataFrame({
+            "Treino": train_counts,
+            "Teste": test_counts
+        }).fillna(0)
+
+        # Configurar o layout dos gráficos lado a lado
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6), gridspec_kw={'width_ratios': [2, 1]})
 
         # Boxplot das métricas
         sns.boxplot(data=metrics_df, ax=ax1)
         ax1.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
 
-        # Gráfico de barras horizontal
-        class_counts_df.plot(kind='barh', stacked=True, ax=ax2)
+        # Gráfico de barras horizontal com barras individualizadas para cada classe
+        class_counts_df.plot(kind='barh', ax=ax2, width=0.7)
         ax2.set_title("Quantidade de Dados por Classe (Treino x Teste)")
         ax2.set_xlabel("Quantidade")
-        ax2.legend(title="Conjunto de Dados")
+        ax2.set_ylabel("Classe")
+        ax2.legend(title="Conjunto de Dados", loc="lower right")
 
+        # Exibir o gráfico na interface
         st.pyplot(fig)
 
         # Exibir a matriz de confusão e o classification report para a última rodada
