@@ -58,7 +58,6 @@ def show():
         ax2.set_ylabel("Score")
         ax2.set_xlabel("Classe")
         ax2.set_yscale("log")  # Definir o eixo y para escala logarítmica
-        ax2.set_ylim(0.8, 1)   # Ajustar os limites do eixo y para foco em valores próximos de 1
         ax2.legend(loc="lower right")
 
         # Exibir a figura com a matriz de confusão e o gráfico do classification report lado a lado
