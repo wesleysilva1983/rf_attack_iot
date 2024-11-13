@@ -1,7 +1,8 @@
 import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+import pandas as pd
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
 
 def show():
     st.title("Resultados do Modelo")
@@ -40,10 +41,29 @@ def show():
         st.subheader("Matriz de Confusão")
         conf_matrix = confusion_matrix(st.session_state.y_test, y_pred_test)
 
-        fig, ax = plt.subplots(figsize=(4, 3))
-        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
-        ax.set_xlabel("Predição")
-        ax.set_ylabel("Real")
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+
+        sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax1)
+        ax1.set_xlabel("Predição")
+        ax1.set_ylabel("Real")
+        ax1.set_title("Matriz de Confusão")
+
+        # Gerar o classification report e convertê-lo em um DataFrame para plotagem
+        report = classification_report(st.session_state.y_test, y_pred_test, output_dict=True)
+        report_df = pd.DataFrame(report).transpose()
+
+        # Excluir as linhas "accuracy", "macro avg" e "weighted avg" para plotar apenas as classes
+        report_df = report_df.drop(["accuracy", "macro avg", "weighted avg"], errors="ignore")
+
+        # Plotar o classification report como gráfico de barras
+        report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax2)
+        ax2.set_title("Classification Report")
+        ax2.set_ylabel("Score")
+        ax2.set_ylim(0, 1)  # Ajustar o limite do eixo y para melhorar a visualização
+        ax2.legend(loc="lower right")
+
+        # Exibir a figura com a matriz de confusão e o gráfico do classification report lado a lado
         st.pyplot(fig)
+
     else:
         st.warning("Por favor, vá para a página de Configuração de Hiperparâmetros e treine o modelo antes de visualizar os resultados.")
