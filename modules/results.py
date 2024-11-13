@@ -21,7 +21,7 @@ def show():
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
         # Exibir o boxplot das métricas de desempenho e gráfico de barras horizontal
-        st.subheader("Boxplot das Métricas e Quantitativo de Dados do dataset")
+        st.subheader("Boxplot das Métricas e Quantitativo de Dados do Dataset")
 
         # Preparar os dados para o gráfico de barras individualizado
         train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
