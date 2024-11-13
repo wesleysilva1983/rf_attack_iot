@@ -3,7 +3,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, classification_report
-from PIL import Image
 
 def show():
     st.title("Resultados do Modelo")
@@ -21,46 +20,35 @@ def show():
         st.write(f"**Profundidade Máxima (max_depth):** {rf.max_depth}")
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
-        # Carregar e exibir a imagem à esquerda
-        img = Image.open('/mnt/data/image.png')
-        col1, col2 = st.columns([1, 2])
+        # Exibir o boxplot das métricas de desempenho e gráfico de barras horizontal
+        st.subheader("Boxplot das Métricas e Quantitativo de Dados do Dataset")
 
-        with col1:
-            st.image(img, caption="Gráfico de referência")
+        # Preparar os dados para o gráfico de barras individualizado
+        train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
+        test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
 
-        with col2:
-            # Exibir o boxplot das métricas de desempenho e gráfico de barras horizontal
-            st.subheader("Boxplot das Métricas de Desempenho e Quantidade de Dados por Classe")
+        # Criar um DataFrame para facilitar a plotagem
+        class_counts_df = pd.DataFrame({
+            "Treino": train_counts,
+            "Teste": test_counts
+        }).fillna(0)
 
-            # Preparar os dados para o gráfico de barras individualizado
-            train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
-            test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
+        # Configurar o layout dos gráficos lado a lado
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6), gridspec_kw={'width_ratios': [2, 1]})
 
-            # Criar um DataFrame para facilitar a plotagem
-            class_counts_df = pd.DataFrame({
-                "Treino": train_counts,
-                "Teste": test_counts
-            }).fillna(0)
+        # Boxplot das métricas
+        sns.boxplot(data=metrics_df, ax=ax1)
+        ax1.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
 
-            # Renomear as classes para incluir os nomes desejados
-            class_counts_df.index = ["0 (benign)", "1 (mirai)", "2 (gafgyt)"]
+        # Gráfico de barras horizontal com barras individualizadas para cada classe
+        class_counts_df.plot(kind='barh', ax=ax2, width=0.7)
+        ax2.set_title("Quantidade de Dados por Classe (Treino x Teste)")
+        ax2.set_xlabel("Quantidade")
+        ax2.set_ylabel("Classe")
+        ax2.legend(title="Conjunto de Dados", loc="lower right")
 
-            # Configurar o layout dos gráficos lado a lado
-            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6), gridspec_kw={'width_ratios': [2, 1]})
-
-            # Boxplot das métricas
-            sns.boxplot(data=metrics_df, ax=ax1)
-            ax1.set_title("Boxplot das Métricas de Desempenho (Treino x Teste)")
-
-            # Gráfico de barras horizontal com barras individualizadas para cada classe
-            class_counts_df.plot(kind='barh', ax=ax2, width=0.7)
-            ax2.set_title("Quantidade de Dados por Classe (Treino x Teste)")
-            ax2.set_xlabel("Quantidade")
-            ax2.set_ylabel("Classe")
-            ax2.legend(title="Conjunto de Dados", loc="lower right")
-
-            # Exibir o gráfico na interface
-            st.pyplot(fig)
+        # Exibir o gráfico na interface
+        st.pyplot(fig)
 
         # Exibir a matriz de confusão e o classification report para a última rodada
         st.subheader("Matriz de Confusão e Classification Report")
