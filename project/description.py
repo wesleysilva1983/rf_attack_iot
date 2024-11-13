@@ -9,10 +9,6 @@ st.markdown("""
 **Discente:** Wesley Candido da Silva.
             
 **Dataset:** N-BaIoT Dataset to Detect IoT Botnet Attacks
-
-**Link dataset:** https://www.kaggle.com/datasets/mkashifn/nbaiot-dataset
-            
+          
 **Link github:** xxx
-            
-**Link colab:** xx
 """)
