@@ -19,7 +19,7 @@ def show():
     **Funcionalidades do aplicativo:**
                 
     1. Configuração dos hiperparâmetros para o modelo RF.
-    2. Treine o modelo.
+    2. Treinamento do modelo.
     3. Métricas do modelo.
     
     **Utilize a barra lateral para navegar entre as páginas.**
