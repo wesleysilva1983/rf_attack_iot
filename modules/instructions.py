@@ -20,7 +20,8 @@ def show():
     1. Configuração dos hiperparâmetros para o modelo RF.
     2. Treinamento do modelo.
     3. Métricas do modelo.
-    
-    **Utilize a barra lateral para navegar entre as páginas.**
                 
     """)
+    
+# Carregando a imagem de um arquivo local
+st.image("images/fluxo_train.jpg", caption="Fluxo para utilizar o App", use_column_width=True)
