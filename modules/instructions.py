@@ -23,7 +23,6 @@ def show():
     3. Métricas do modelo.            
     """)
 
-
 # Abrindo a imagem com PIL
 imagem = Image.open("images/fluxo.JPG")
 st.image(imagem, caption="Fluxo para utilizar o App", use_column_width=True)
