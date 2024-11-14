@@ -21,7 +21,7 @@ def show():
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
         # Exibir os rótulos das classes
-        st.subheader("Legenda dos Rótulos de Classe")
+        st.subheader("Legenda dos Rótulos das Classes")
         st.markdown("""
             - **0**: Benign
             - **1**: Mirai
