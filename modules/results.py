@@ -29,14 +29,10 @@ def show():
         """)
 
 
-        # Gráfico 1: Quantitativo de Dados por Classe
-        st.subheader("Quantitativo do dataset (Train / Test)")
+       # Gráfico 1: Quantitativo de Dados por Classe
+        st.subheader("Quantidade de Dados por Classe (Train / Test)")
         train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
         test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
-
-        # Aplicar o mapeamento aos índices do DataFrame
-        class_names = {0: "Benign", 1: "Mirai", 2: "Gafgyt"}
-        class_counts_df.index = class_counts_df.index.map(class_names)
 
         class_counts_df = pd.DataFrame({
             "Treino": train_counts,
