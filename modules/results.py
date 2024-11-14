@@ -30,7 +30,7 @@ def show():
 
 
        # Gráfico 1: Quantitativo de Dados por Classe
-        st.subheader("Quantidade de Dados por Classe (Train / Test)")
+        st.subheader("Quantitativo de dados do Dataset")
         train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
         test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
 
