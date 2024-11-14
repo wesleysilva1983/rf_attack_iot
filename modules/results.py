@@ -53,7 +53,7 @@ def show():
         st.pyplot(fig)
 
         # Gráfico 2: Boxplot das Métricas de Desempenho
-        st.subheader("Boxplot das Métricas de Desempenho (Treino x Teste)")
+        st.subheader("Boxplot das Métricas de Desempenho")
         fig, ax = plt.subplots(figsize=(8, 6))
         sns.boxplot(data=metrics_df, ax=ax)
     
