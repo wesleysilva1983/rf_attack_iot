@@ -20,8 +20,17 @@ def show():
         st.write(f"**Profundidade Máxima (max_depth):** {rf.max_depth}")
         st.write(f"**Mínimo de Amostras para Dividir (min_samples_split):** {rf.min_samples_split}")
 
+        # Exibir os rótulos das classes
+        st.subheader("Legenda dos Rótulos de Classe")
+        st.markdown("""
+            - **0**: Benign
+            - **1**: Mirai
+            - **2**: Gafgyt
+        """)
+
+
         # Gráfico 1: Quantitativo de Dados por Classe
-        st.subheader("Quantidade de Dados por Classe (Treino x Teste)")
+        st.subheader("Quantidade de Dados por Classe (Train / Test)")
         train_counts = pd.Series(st.session_state['y_train']).value_counts().sort_index()
         test_counts = pd.Series(st.session_state['y_test']).value_counts().sort_index()
 
