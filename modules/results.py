@@ -56,7 +56,15 @@ def show():
         st.subheader("Boxplot das Métricas de Desempenho")
         fig, ax = plt.subplots(figsize=(8, 6))
         sns.boxplot(data=metrics_df, ax=ax)
-    
+
+        # Adicionar linhas de grade
+        ax.grid(axis="y", linestyle="--", alpha=0.7)
+
+        # Calcular e adicionar os valores da média
+        means = metrics_df.mean()
+        for idx, mean in enumerate(means):
+            ax.text(idx, mean, f"{mean:.2f}", ha="center", va="bottom", color="red", fontsize=10)
+
         st.pyplot(fig)
 
         # Gráfico 3: Classification Report
