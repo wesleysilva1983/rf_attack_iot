@@ -75,13 +75,18 @@ def show():
         report_df = report_df.drop(["accuracy", "macro avg", "weighted avg"], errors="ignore")
 
         fig, ax = plt.subplots(figsize=(8, 6))
-        report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax)
-   
+        bars = report_df[["precision", "recall", "f1-score"]].plot(kind="bar", ax=ax)
+
+        # Adicionar valores nas barras
+        for container in ax.containers:
+            ax.bar_label(container, fmt="%.2f", label_type="edge", fontsize=9, color="black")
+
         ax.set_ylabel("Score")
         ax.set_xlabel("Classe")
         ax.set_yscale("log")
         ax.legend(loc="lower right")
         st.pyplot(fig)
+
 
         # Gráfico 4: Matriz de Confusão
         st.subheader("Matriz de Confusão")
