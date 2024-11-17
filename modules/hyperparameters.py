@@ -7,11 +7,11 @@ def show():
     st.title("Configuração de Hiperparâmetros")
 
     # Hiperparâmetros configuráveis
-    n_estimators = st.slider("Número de Árvores (n_estimators)", min_value=1, max_value=30, step=5, value=10)
+    n_estimators = st.slider("Número de Árvores (n_estimators)", min_value=1, max_value=30, step=2, value=10)
     criterion = st.selectbox("Critério de Divisão (criterion)", options=["gini", "entropy"], index=1)
     max_features = st.selectbox("Máximo de Features (max_features)", options=["auto", "sqrt", "log2"], index=1)
-    max_depth = st.slider("Profundidade Máxima das Árvores (max_depth)", min_value=3, max_value=15, step=3, value=6)
-    min_samples_split = st.slider("Mínimo de Amostras para Dividir (min_samples_split)", min_value=3, max_value=15, step=3, value=6)
+    max_depth = st.slider("Profundidade Máxima das Árvores (max_depth)", min_value=3, max_value=15, step=2, value=6)
+    min_samples_split = st.slider("Mínimo de Amostras para Dividir (min_samples_split)", min_value=3, max_value=15, step=2, value=6)
 
     # Botão para iniciar o treinamento
     if st.button("Treinar Modelo"):
