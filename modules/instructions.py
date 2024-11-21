@@ -6,7 +6,7 @@ def show():
     **Projeto 2COP507:** Detecção de Ataques no Tráfego de Dispositivos IoT .                           
     **Discente:** Wesley Candido da Silva.    
     **Dataset N-BaIoT:** https://www.kaggle.com/datasets/mkashifn/nbaiot-dataset
-        **GitHub:** https://github.com/wesleysilva1983/rf_attack_iot               
+    **GitHub:** https://github.com/wesleysilva1983/rf_attack_iot               
     **YouTube:** https://youtu.be/rfkwhLMyxOM
     """)
 
