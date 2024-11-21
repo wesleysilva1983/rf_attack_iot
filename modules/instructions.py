@@ -5,9 +5,10 @@ def show():
     ### Pós-graduação em Ciência da Computação - UEL
     **Projeto 2COP507:** Detecção de Ataques no Tráfego de Dispositivos IoT .                           
     **Discente:** Wesley Candido da Silva.
-    **GitHub:** https://github.com/wesleysilva1983/rf_attack_iot        
-    **Dataset N-BaIoT:** https://www.kaggle.com/datasets/mkashifn/nbaiot-dataset          
-    **YouTube:** https://youtu.be/rfkwhLMyxOM
+    
+        **GitHub:** https://github.com/wesleysilva1983/rf_attack_iot        
+        **Dataset N-BaIoT:** https://www.kaggle.com/datasets/mkashifn/nbaiot-dataset          
+        **YouTube:** https://youtu.be/rfkwhLMyxOM
     """)
 
     st.markdown("""
